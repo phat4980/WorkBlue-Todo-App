@@ -10,6 +10,8 @@
     <color name="dark_blue">#142453</color>
     <color name="blue">#246BFD</color>
     <color name="near_blue">#1878D0</color>
+    <color name="light_blue">#779FF2</color>
+    <color name="def_blue">#848188</color>
     <color name="yellow">#FFB524</color>
     <color name="purple">#371969</color>
     <color name="dark_grey">#252834</color>

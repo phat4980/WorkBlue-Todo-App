@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_blue"
+    tools:context=".LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvSingin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sing in"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvSupSingin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Welcome to WorkBlue todo App\nSing up to get started."
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginBottom="0dp"
+        android:hint="@string/hint_email" >
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="@string/hint_password"
+        app:passwordToggleEnabled="true"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSingin"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/blue"
+        android:text="Sing in"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Or countinue with"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/def_blue"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSinginGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="100dp"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_google"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Google"
+            android:textColor="@color/dark_grey" />
+
+        <Button
+            android:id="@+id/btnSinginFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginEnd="30dp"
+            android:layout_toEndOf="@+id/btnSinginGoogle"
+            android:backgroundTint="#4267B2"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="1"
+            android:text="Facebook"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Don't have an account?"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/def_blue" />
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="register now"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/white"/>
+
+</LinearLayout>
