@@ -26,8 +26,8 @@
         android:textSize="30dp"
         android:fontFamily="@font/poppins_regular"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -78,18 +78,18 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSU"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/blue"
-        android:text="Sing up"
-        android:fontFamily="@font/poppins_regular"/>
+        <Button
+            android:id="@+id/btnSU"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/blue"
+            android:text="Sing up"
+            android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
