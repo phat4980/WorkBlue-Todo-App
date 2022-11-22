@@ -6,35 +6,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
-    private TextView ToRegPage;
+public class RegisterActivity extends AppCompatActivity {
+    private TextView ToLogPage;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        ToRegPage = findViewById(R.id.tvToRegister);
+        ToLogPage = findViewById(R.id.tvToLogin);
 
-        ToRegPage.setOnClickListener(new View.OnClickListener() {
+        ToLogPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavigateToReg();
+                NavigateToLog();
             }
         });
 
+
     }
 
-    private void NavigateToReg()
+    private void NavigateToLog()
     {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }
