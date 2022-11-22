@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputLayout nameTextInputSU, emailTextInputSU, passwordTextInputSU;
     TextInputEditText nameEditTextSU, emailEditTextSU, passwordEditTextSU;
     Button btnSingUp;
-    TextView ToLogPage;
+    LinearLayout ToLogPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         changeToLoginPage();
     }
 
-    private void initUi()
+    private void initUi() // ánh xạ
     {
         nameTextInputSU = findViewById(R.id.nameSU_text_input);
         nameEditTextSU = findViewById(R.id.nameSU_edit_text);
@@ -51,7 +55,15 @@ public class RegisterActivity extends AppCompatActivity {
         ToLogPage = findViewById(R.id.tvToLogin);
     }
 
-    private void startSingUp() {
+    private void createAccount()
+    {
+        String strEmail = emailEditTextSU.getText().toString().trim();
+        String strPassword = passwordEditTextSU.getText().toString().trim();
+
+    }
+
+    private void startSingUp() //Đăng ký
+    {
         btnSingUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void onClickSingUp() {
+    private void onClickSingUp() //Bắt sự kiện đăng ký
+    {
         String strEmail = emailEditTextSU.getText().toString().trim();
         String strPassword = passwordEditTextSU.getText().toString().trim();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -80,7 +93,42 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
-    private void changeToLoginPage() {
+    private void displayErrorEmail() //hiển thị lỗi lúc nhập
+    {
+        emailEditTextSU.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (validateRegEmail(emailEditTextSU.getText().toString().trim())) {
+                    emailTextInputSU.setError(null); //Clear the error
+                }
+                return false;
+            }
+        });
+    }
+
+    private void displayErrorPassword() //hiển thị lỗi lúc nhập
+    {
+        passwordEditTextSU.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (validateRegPassword(passwordEditTextSU.getText())) {
+                    passwordTextInputSU.setError(null); //Clear the error
+                }
+                return false;
+            }
+        });
+    }
+
+    private boolean validateRegEmail(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private boolean validateRegPassword(Editable password) {
+        return password != null && password.length() >= 8;
+    }
+
+    private void changeToLoginPage() //Sang trang đăng nhập
+    {
         ToLogPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void NavigateToLog()
+    private void NavigateToLog() //điều hướng
     {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

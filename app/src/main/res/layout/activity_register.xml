@@ -60,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                app:errorEnabled="true"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,23 +92,30 @@
             android:fontFamily="@font/poppins_regular"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:text="Already have an account?"
-        android:fontFamily="@font/poppins_regular"
-        android:textColor="@color/def_blue" />
-
-    <TextView
+    <LinearLayout
         android:id="@+id/tvToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
-        android:text="Sing in"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppins_regular"
-        android:textColor="@color/white"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Already have an account?"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/def_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sing in"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
   </LinearLayout>
