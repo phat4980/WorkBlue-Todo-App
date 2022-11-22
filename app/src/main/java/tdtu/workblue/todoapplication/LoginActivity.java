@@ -15,8 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputLayout emailTextInput,passwordTextInput;
-    TextInputEditText emailEditText, passwordEditText;
+    TextInputLayout emailTextInputSI,passwordTextInputSI;
+    TextInputEditText emailEditTextSI, passwordEditTextSI;
     Button btnSingin, btnGGle, btnFace;
     TextView ToRegPage;
 
@@ -44,8 +44,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUi()
     {
-        emailTextInput = findViewById(R.id.emailSI_text_input);
-        emailEditText = findViewById(R.id.emailSI_edit_text);
+        emailTextInputSI = findViewById(R.id.emailSI_text_input);
+        emailEditTextSI = findViewById(R.id.emailSI_edit_text);
+        passwordTextInputSI = findViewById(R.id.passwordSI_text_input);
+        passwordEditTextSI = findViewById(R.id.passwordSI_edit_text);
         btnSingin = findViewById(R.id.btnSingin);
         btnGGle = findViewById(R.id.btnGoogle);
         btnFace = findViewById(R.id.btnFacebook);

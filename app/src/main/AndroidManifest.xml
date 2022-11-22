@@ -16,12 +16,6 @@
         android:theme="@style/Theme.WorkBlueTodoApp"
         tools:targetApi="31" >
         <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashActivity"
             android:exported="true" >
             <intent-filter>
@@ -30,6 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
