@@ -18,10 +18,10 @@
         android:layout_marginTop="30dp"/>
 
     <TextView
-        android:id="@+id/tvSingin"
+        android:id="@+id/tvSignin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sing up"
+        android:text="Sign up"
         android:textColor="@color/white"
         android:textSize="30dp"
         android:fontFamily="@font/poppins_regular"
@@ -88,7 +88,7 @@
             android:paddingBottom="10dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/blue"
-            android:text="Sing up"
+            android:text="Sign up"
             android:fontFamily="@font/poppins_regular"/>
     </LinearLayout>
 
@@ -96,7 +96,7 @@
         android:id="@+id/tvToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Sing in"
+            android:text="Sign in"
             android:textStyle="bold"
             android:fontFamily="@font/poppins_regular"
             android:textColor="@color/white"/>
