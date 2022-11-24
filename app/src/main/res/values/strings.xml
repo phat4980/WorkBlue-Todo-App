@@ -8,4 +8,11 @@
     <string name="hint_confirmPass">Confirm your password</string>
     <string name="error_email">You need to use your student email address</string>
     <string name="error_password">Password must contain at least 8 characters</string>
+
+    <!--Facebook-->
+    <string name="facebook_app_id">684927886345384</string>
+    <string name="fb_login_protocol_scheme">fb684927886345384</string>
+    <string name="facebook_client_token">5642d0b305f1d76dab729623e109f091</string>
+
+
 </resources>

@@ -4,14 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
+        <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable/ic_add_24.xml" value="0.228" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable/ic_facebook.xml" value="0.298" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable/ic_google.xml" value="0.298" />
+        <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable/ic_menu_24dp.xml" value="0.3085" />
+        <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/drawable/ic_search_24dp.xml" value="0.2755" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/font/poppins_thin.xml" value="0.384375" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/layout/activity_login.xml" value="0.3416666666666667" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/layout/activity_splash.xml" value="0.5" />
         <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/study/hk1_year3/mobile/TH/CK/Final/app/src/main/res/menu/bottom_app_bar.xml" value="0.3541666666666667" />
       </map>
     </option>
   </component>

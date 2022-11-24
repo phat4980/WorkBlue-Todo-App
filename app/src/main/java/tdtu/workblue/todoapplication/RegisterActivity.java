@@ -45,9 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         initUi();
         changeInProcess(false);
-        deleteErrorShowN();
-        deleteErrorShowE();
-        deleteErrorShowP();
         createUser();
         changeToLoginPage();
 
@@ -98,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Sign up successful!", Toast.LENGTH_LONG).show();
                                 Toast.makeText(RegisterActivity.this, "Check your email to verify", Toast.LENGTH_LONG).show();
                                 Auth.getCurrentUser().sendEmailVerification();
-                                NavigateToLog();
+                                NavigateToLog(); //Điều hướng tới trang đăng nhập
                                 finishAffinity();
                             } else {
                                 Toast.makeText(RegisterActivity.this, "Authentication failed", Toast.LENGTH_LONG).show();
@@ -117,54 +114,9 @@ public class RegisterActivity extends AppCompatActivity {
         passwordTextInputSU =  findViewById(R.id.passwordSU_text_input);
         passwordEditTextSU = findViewById(R.id.passwordSU_edit_text);
         btnSignUp =  findViewById(R.id.btnSU);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBarSU);
         ToLogPage =  findViewById(R.id.tvToLogin);
 
-    }
-
-    private void deleteErrorShowN()
-    {
-        emailEditTextSU.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                String name = emailEditTextSU.getText().toString().trim();
-                if(TextUtils.isEmpty(name))
-                {
-                    nameTextInputSU.setError(null);
-                }
-                return false;
-            }
-        });
-    }
-
-    private void deleteErrorShowE()
-    {
-        emailEditTextSU.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                String email = emailEditTextSU.getText().toString().trim();
-                if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
-                {
-                    emailTextInputSU.setError(null);
-                }
-                return false;
-            }
-        });
-    }
-
-    private void deleteErrorShowP()
-    {
-        emailEditTextSU.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                String pass = emailEditTextSU.getText().toString().trim();
-                if(pass.length() >=8)
-                {
-                    passwordTextInputSU.setError(null);
-                }
-                return false;
-            }
-        });
     }
 
     private void changeInProcess(boolean inProgress) // thanh progess và button

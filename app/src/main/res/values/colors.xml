@@ -18,4 +18,13 @@
     <color name="deep_grey">#181A20</color>
     <color name="salmon">#F67A7A</color>
 
+    <color name="primaryColor">#2196f3</color>
+    <color name="primaryLightColor">#6ec6ff</color>
+    <color name="primaryDarkColor">#0069c0</color>
+    <color name="secondaryColor">#29b6f6</color>
+    <color name="secondaryLightColor">#73e8ff</color>
+    <color name="secondaryDarkColor">#0086c3</color>
+    <color name="primaryTextColor">#eceff1</color>
+    <color name="secondaryTextColor">#eceff1</color>
+
 </resources>
