@@ -21,7 +21,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager fbCallback;
     private  FirebaseAuth Auth;
     private GoogleSignIn client;
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleSignInClient googleSignInClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void initUi() //ánh xạ
+    private void initUi()
     {
         emailTextInputSI = findViewById(R.id.emailSI_text_input);
         emailEditTextSI = findViewById(R.id.emailSI_edit_text);
@@ -118,8 +123,9 @@ public class LoginActivity extends AppCompatActivity {
                             changeInProcess(false);
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Toast.makeText(LoginActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                                NavigateToReg();
+                                Toast.makeText(LoginActivity.this, "Sign in successful",
+                                        Toast.LENGTH_SHORT).show();
+                                NavigateTo();
                                 finishAffinity();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -130,11 +136,25 @@ public class LoginActivity extends AppCompatActivity {
                     });
         }
     }
-
     //Google login
     private void googleLogin()
     {
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
 
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+        btnGGle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCLick();
+            }
+        });
+    }
+
+    private void onCLick() {
+        Intent intent = googleSignInClient.getSignInIntent();
+        startActivityForResult(intent, 100);
     }
 
     //Facebook login
@@ -164,8 +184,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        Auth.signInWithCredential(credential)
+        AuthCredential credentialUser = FacebookAuthProvider.getCredential(token.getToken());
+        Auth.signInWithCredential(credentialUser)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -173,7 +193,6 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = Auth.getCurrentUser();
                             updateUI(user);
-                            NavigateToReg();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -187,12 +206,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         fbCallback.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+
+
     }
 
     private void updateUI(FirebaseUser user) {
         if(user != null)
         {
-            NavigateToReg();
+            NavigateTo();
         } else {
             Toast.makeText(this, "Sign in to continue", Toast.LENGTH_SHORT).show();
         }
@@ -209,7 +230,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void changeToRegPage() //Sang trang đăng ký
+    private void changeToRegPage() //move to register page
     {
         ToRegPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +242,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void NavigateToReg() //điều hướng
+    private void NavigateTo() //Navigation to main page
     {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -7,35 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:433165081126:android:2a2f8c10def48617ec64e7",
-        "android_client_info": {
-          "package_name": "tdtu.workblue.todoapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "433165081126-i1i56kmus1mdo57ar98nukgcr7p8chou.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDuinNTHkFoK5VjaOm8kwWZJaPIs_m8sVA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "433165081126-i1i56kmus1mdo57ar98nukgcr7p8chou.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:433165081126:android:8c8612221f1d600eec64e7",
         "android_client_info": {
           "package_name": "tdtu.workblue.todoapplication"
