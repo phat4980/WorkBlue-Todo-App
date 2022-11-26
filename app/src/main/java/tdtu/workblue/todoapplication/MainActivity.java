@@ -14,14 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        initUi();
-    }
-
-    private void initUi()
-    {
-        bottomAppBar = findViewById(R.id.bottomAppBar);
     }
 
 }

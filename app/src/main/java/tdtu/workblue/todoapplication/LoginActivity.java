@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +24,18 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -63,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         changeInProcess(false);
         startSingIn();
         facebookLogin();
+        googleLogin();
         changeToRegPage();
 
 
@@ -140,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     private void googleLogin()
     {
         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().build();
+                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
 
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
@@ -204,8 +215,22 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        fbCallback.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            // If the error resolution was not successful we should not resolve further
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+           try
+           {
+               task.getResult(ApiException.class);
+           } catch (ApiException e) {
+               Toast.makeText(this, "error:"+e.getMessage(), Toast.LENGTH_LONG).show();
+               NavigateTo();
+               finishAffinity();
+           }
+        }else{
+            //If not request code is RC_SIGN_IN it must be facebook
+            fbCallback.onActivityResult(requestCode, resultCode, data);
+        }
 
 
     }
