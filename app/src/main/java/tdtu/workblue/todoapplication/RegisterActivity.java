@@ -40,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
         initUi();
         changeInProcess(false);

@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private CallbackManager fbCallback;
     private  FirebaseAuth Auth;
-    private GoogleSignIn client;
     private GoogleSignInOptions googleSignInOptions;
     private GoogleSignInClient googleSignInClient;
 
@@ -66,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         FacebookSdk.sdkInitialize(LoginActivity.this); //sdkInitialize Facebook
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
         initUi();
         changeInProcess(false);

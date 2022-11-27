@@ -19,8 +19,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
 
         halderSplash();
     }
@@ -47,5 +45,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         }
+        finish();
     }
 }
