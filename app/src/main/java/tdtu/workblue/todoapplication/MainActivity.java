@@ -111,20 +111,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.profile) {
-            Intent intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intentProfile);
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
             } else if(id == R.id.settings) {
-            Intent intentProfile = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intentProfile);
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }  else if(id == R.id.help_feedback) {
-            Intent intentProfile = new Intent(MainActivity.this, HelpFeedActivity.class);
-            startActivity(intentProfile);
+            Intent intent = new Intent(MainActivity.this, HelpFeedActivity.class);
+            startActivity(intent);
         }  else if(id == R.id.terms) {
-            Intent intentProfile = new Intent(MainActivity.this, TermsActivity.class);
-            startActivity(intentProfile);
+            Intent intent = new Intent(MainActivity.this, TermsActivity.class);
+            startActivity(intent);
         }  else if(id == R.id.contact) {
-            Intent intentProfile = new Intent(MainActivity.this, ContactActivity.class);
-            startActivity(intentProfile);
+            Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+            startActivity(intent);
         }
         return true;
     }
