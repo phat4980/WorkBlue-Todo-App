@@ -32,8 +32,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         toggle.syncState();
 
         topNavigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     private void initUi() // ánh xạ

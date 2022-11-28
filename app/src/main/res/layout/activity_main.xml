@@ -3,6 +3,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundblue"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                app:backgroundTint="@color/secondaryColor"
+                app:backgroundTint="@color/secondaryDarkColor"
                 app:layout_anchor="@id/bottom_app_bar"
                 app:srcCompat="@drawable/ic_add_24dp"
                 tools:ignore="SpeakableTextPresentCheck" />
