@@ -39,8 +39,8 @@
             android:id="@+id/showLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Location : TDTU University"
-            android:textSize="28dp"
+            android:text="@string/location_tdtu"
+            android:textSize="28sp"
             android:fontFamily="@font/poppins_regular"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -50,25 +50,25 @@
             android:id="@+id/showSDT1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="18dp"
-            android:text="Phone number : 0938288245 - Tấn Phát - 520H0664"
+            android:text="@string/tan_phat_in4"
             android:fontFamily="@font/poppins_regular"
             android:layout_below="@id/showLocation"/>
         <TextView
             android:id="@+id/showSDT2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="Phone number : 0906819236 - Hữu Phúc - 420H0484"
+            android:layout_marginStart="3dp"
+            android:text="@string/huu_phuc_in4"
             android:fontFamily="@font/poppins_regular"
             android:layout_below="@id/showSDT1"/>
         <TextView
             android:id="@+id/showSDT3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="Phone number : 0857788086 - Hoàng Tuấn - 520H0325"
+            android:layout_marginStart="3dp"
+            android:text="@string/honag_tuan_in4"
             android:fontFamily="@font/poppins_regular"
             android:layout_below="@id/showSDT2"/>
 
@@ -76,10 +76,10 @@
             android:id="@+id/sumUp1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="There are all information about us! If you have any question, please contact us!"
+            android:text="@string/in4Show"
             android:layout_below="@id/showSDT3"
             android:fontFamily="@font/poppins_regular"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textAlignment="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -89,10 +89,10 @@
             android:id="@+id/sumUp2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Thanks for using ours app!"
+            android:text="@string/thanks"
             android:layout_below="@id/sumUp1"
             android:fontFamily="@font/poppins_regular"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textAlignment="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -106,6 +106,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header_nav"
         app:menu="@menu/top_nav_menu"/>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

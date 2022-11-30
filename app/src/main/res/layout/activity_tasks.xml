@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundblue"
-    tools:context=".ProfileActivity"
+    tools:context=".MainActivity"
     tools:openDrawer="start"
     android:fitsSystemWindows="true">
 
@@ -37,5 +37,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header_nav"
         app:menu="@menu/top_nav_menu"/>
-
 </androidx.drawerlayout.widget.DrawerLayout>

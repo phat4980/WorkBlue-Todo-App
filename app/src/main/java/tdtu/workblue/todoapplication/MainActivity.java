@@ -9,15 +9,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import tdtu.workblue.todoapplication.adapter.MyViewPagerAdapter;
+import tdtu.workblue.todoapplication.fragment.TasksFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
@@ -25,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private NavigationView topNavigationView;
     private ViewPager2 viewPagerContent;
+    private ImageView imgAvatar;
+    private TextView tvName, tvEmail;
 
     //Bottom navigation
     private static final int FRAGMENT_TASK = 0;
@@ -38,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         initUi();
         setSupportActionBar(toolbar); //kích hoạt drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -48,19 +60,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         MyViewPagerAdapter adapterViewPager = new MyViewPagerAdapter(this); //khởi tạo viewpager adapter
         viewPagerContent.setAdapter(adapterViewPager);
-
-        topNavigationView.setNavigationItemSelectedListener(this);
         
         bottomNavigationChange();
+        showUserInformation();
     }
 
     private void initUi() // ánh xạ
     {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
-        topNavigationView = findViewById(R.id.top_navigation);
+        topNavigationView = (NavigationView) findViewById(R.id.top_navigation);
+        topNavigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         viewPagerContent = findViewById(R.id.view_pager);
+        imgAvatar = topNavigationView.getHeaderView(0).findViewById(R.id.profile_image);
+        tvName = topNavigationView.getHeaderView(0).findViewById(R.id.profile_name);
+        tvEmail = topNavigationView.getHeaderView(0).findViewById(R.id.profile_email);
     }
 
     @Override // hiển thị menu
@@ -108,11 +123,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) { // điều hướng drawer
         int id = item.getItemId();
-        if(id == R.id.profile) {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
+        if(id == R.id.main) {
+            drawerLayout.closeDrawer(GravityCompat.START);
             } else if(id == R.id.settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
@@ -125,8 +139,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }  else if(id == R.id.contact) {
             Intent intent = new Intent(MainActivity.this, ContactActivity.class);
             startActivity(intent);
+        } else if(id == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
         }
         return true;
+    }
+
+    //get user profile
+    private void showUserInformation()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            return;
+        }
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Uri photoUrI = user.getPhotoUrl();
+
+        // Check xem có tên chưa
+        if(name == null) {
+            tvName.setVisibility(View.GONE);
+        } else {
+            tvName.setVisibility(View.VISIBLE);
+            tvName.setText(name);
+        }
+        tvEmail.setText(email);
+        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
     }
 
     @Override // Xử lý khi ấn back drawer

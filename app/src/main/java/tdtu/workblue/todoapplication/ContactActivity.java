@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.MediaRouteButton;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,9 +18,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +33,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -38,16 +42,17 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.util.Objects;
-
 public class ContactActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private NavigationView topNavigationView;
+    private NavigationView topNavigationViewContact;
     TextView num1,num2,num3;
+    private TextView tvName, tvEmail;
+    private ImageView imgAvatar;
 
     SupportMapFragment smf;
     FusedLocationProviderClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +66,10 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        topNavigationView.setNavigationItemSelectedListener(this); //Bắt sự kiện thanh Drawer
+        showUserInformation();
         callphone();
 
+        //xử lý google map
         smf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         client = LocationServices.getFusedLocationProviderClient(this);
 
@@ -72,7 +78,7 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) { // xin quyền granted
-                        getmylocation();
+                        getMylocation();
                     }
 
                     @Override
@@ -88,7 +94,41 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
 
     }
 
-    private void getmylocation() {
+    private void initUi() // ánh xạ
+    {
+        toolbar = findViewById(R.id.toolbar_contact);
+        drawerLayout = findViewById(R.id.drawer_layout_contact);
+        topNavigationViewContact = findViewById(R.id.top_navigation_contact);
+        topNavigationViewContact.setNavigationItemSelectedListener(this);
+        imgAvatar = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_image);
+        tvName = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_name);
+        tvEmail = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_email);
+        num1 = findViewById(R.id.showSDT1);
+        num2 = findViewById(R.id.showSDT2);
+        num3 = findViewById(R.id.showSDT3);
+    }
+
+    private void showUserInformation() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            return;
+        }
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Uri photoUrI = user.getPhotoUrl();
+
+        // Check xem có tên chưa
+        if(name == null) {
+            tvName.setVisibility(View.GONE);
+        } else {
+            tvName.setVisibility(View.VISIBLE);
+            tvName.setText(name);
+        }
+        tvEmail.setText(email);
+        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
+    }
+
+    private void getMylocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -111,16 +151,6 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
         });
     }
 
-    private void initUi() // ánh xạ
-    {
-        toolbar = findViewById(R.id.toolbar_contact);
-        drawerLayout = findViewById(R.id.drawer_layout_contact);
-        topNavigationView = findViewById(R.id.top_navigation_contact);
-        num1 = findViewById(R.id.showSDT1);
-        num2 = findViewById(R.id.showSDT2);
-        num3 = findViewById(R.id.showSDT3);
-    }
-
     @Override // hiển thị menu
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_option_menu, menu);
@@ -130,8 +160,8 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
     @Override // điều hướng drawer
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.profile) {
-            Intent intentContact = new Intent(ContactActivity.this, ProfileActivity.class);
+        if (id == R.id.main) {
+            Intent intentContact = new Intent(ContactActivity.this, MainActivity.class);
             startActivity(intentContact);
         } else if (id == R.id.settings) {
             Intent intentContact = new Intent(ContactActivity.this, SettingsActivity.class);
@@ -144,6 +174,11 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
             startActivity(intentContact);
         } else if (id == R.id.contact) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if(id == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(ContactActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
         }
         return true;
     }
@@ -157,50 +192,7 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
         }
     }
 
-    /*private void fetchLastLocation() { // xứ lý trìnhg duyệt map
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if(location != null) {
-                    currentLocation = location;
-                    Toast.makeText(ContactActivity.this, currentLocation.getLatitude()+ "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                    SupportMapFragment SupMapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.google_map);
-                    Objects.requireNonNull(SupMapFragment).getMapAsync(ContactActivity.this);
-                } else {
-                    Toast.makeText(ContactActivity.this, "error", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }*/
-
-    /*@Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        // Add a marker in Sydney and move the camera
-        LatLng TonDucThang = new LatLng(10.732657281115225, 106.69974242970282);
-        MarkerOptions markerOptions = new MarkerOptions().position(TonDucThang)
-                .title("TDTU University").visible(true);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(TonDucThang));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(TonDucThang, 5));
-        googleMap.addMarker(markerOptions);
-    }*/
-
- /*   @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                fetchLastLocation();
-            }
-        }
-    }*/
-
+    //ấn để gọi
     private void callphone()
     {
         num1.setOnClickListener(new View.OnClickListener() {
