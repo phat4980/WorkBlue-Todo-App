@@ -36,6 +36,11 @@
     <string name="honag_tuan_in4">Phone number : 0857788086 - Hoàng Tuấn - 520H0325</string>
     <string name="in4Show">There are all information about us! If you have any question, please contact us!</string>
     <string name="thanks">Thanks for using ours app!</string>
+    <string name="application_user_guide">Application User Guide</string>
+    <string name="select_help_guild">Select help guild:</string>
+    <string name="feedback">Feedback</string>
+    <string name="send_feedback">Please send us your feedback</string>
+    <string name="send_your_feedback">Send your feedback</string>
 
 
 </resources>

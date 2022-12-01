@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_layout_corner_16"
+    android:orientation="vertical"
+    android:layout_margin="16dp">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/send_your_feedback"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:background="@drawable/bg_corner_16"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_feedback"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/edt_feed_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/feedback"
+            android:background="@drawable/bg_corner_10_border"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/no_feed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:layout_marginRight="10dp"
+            android:alpha="0.5"
+            android:backgroundTint="@color/deep_grey"
+            android:text="No, Thank you"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/send_feed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="Send"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -105,38 +105,34 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="3dp"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btnGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="195dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
             android:backgroundTint="@color/white"
             android:drawableLeft="@drawable/ic_google"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Google"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Continue with Google"
             android:textColor="@color/dark_grey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnFacebook"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="9dp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btnFacebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btnGoogle"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
             tools:ignore="TouchTargetSizeCheck" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tvToRegister"

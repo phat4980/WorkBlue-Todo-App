@@ -47,36 +47,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawerLayout;
     private NavigationView topNavigationViewSettings;
     private EditText edtName, edtEmail;
-    private Button btnUpdateProfile;
-    private ImageView edtImgAvatar;
-    private Uri mUri;
+    private Button btnUpdateProfile , btnUpdateEmail;
     private ImageView imgAvatar;
     private TextView tvName, tvEmail;
     private ProgressBar progressBar;
-
-    private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == RESULT_OK) {
-                Intent intent = result.getData();
-                if(intent == null) {
-                    return;
-                }
-            }
-            Uri uri = getIntent().getData();
-            setUri(uri);
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri );
-                this.setBitmapImageView(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void setBitmapImageView(Bitmap bitmapImageView) {
-            edtImgAvatar.setImageBitmap(bitmapImageView);
-        }
-    });
 
 
     @Override
@@ -108,8 +82,8 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         edtName = findViewById(R.id.edt_name);
         edtEmail = findViewById(R.id.edt_email);
         btnUpdateProfile = findViewById(R.id.btnUpdate_profile);
-        edtImgAvatar = findViewById(R.id.edt_img_avatar);
-        imgAvatar = topNavigationViewSettings.getHeaderView(0).findViewById(R.id.profile_image);
+        btnUpdateEmail = findViewById(R.id.btnUpdate_email);
+        imgAvatar = findViewById(R.id.edt_img_avatar);
         tvName = topNavigationViewSettings.getHeaderView(0).findViewById(R.id.profile_name);
         tvEmail = topNavigationViewSettings.getHeaderView(0).findViewById(R.id.profile_email);
 
@@ -123,17 +97,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         }
         edtName.setText(user.getDisplayName());
         edtEmail.setText(user.getEmail());
-        Glide.with(this).load(user.getPhotoUrl()).error(R.drawable.ic_avatar_default).into(edtImgAvatar);
     }
 
     //bắt sự kiện listener
     private void settingsProfile() {
-        edtImgAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickRequestPermission();
-            }
-        });
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,43 +108,13 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 onClickUpdateProfile();
             }
         });
-    }
 
-    //xin quyền
-    private void onClickRequestPermission() {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            openGallery();
-            return;
-        }
-        if(this.checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE,0,0) == PackageManager.PERMISSION_GRANTED) {
-            openGallery();
-        } else {
-            String [] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            this.requestPermissions(permissions, MY_REQUEST_CODE);
-        }
-    }
-
-    @Override //cho phép user sử dụng hay từ chối
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == MY_REQUEST_CODE) {
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
-            } else {
-                Toast.makeText(this, "Please give permission", Toast.LENGTH_SHORT).show();
+        btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickUpdateEmail();
             }
-        }
-    }
-
-    private void openGallery() { // mở thư viện ảnh
-        Intent intent = new Intent();
-        intent.setType("image/");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        mActivityResultLauncher.launch(Intent.createChooser(intent, "Select Picture"));
-    }
-
-    public void setUri(Uri mUri) {
-        this.mUri = mUri;
+        });
     }
 
     private void onClickUpdateProfile() { //ấn để update
@@ -190,7 +127,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(strName)
-                .setPhotoUri(mUri)
                 .build();
 
         user.updateProfile(profileUpdates)
@@ -208,6 +144,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 });
     }
 
+    //get profile users
     private void showUserInformation() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null) {
@@ -226,6 +163,29 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         }
         tvEmail.setText(email);
         Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
+    }
+
+    //Bắt sự kiện change email
+    private void onClickUpdateEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        String strNewEmail = edtEmail.getText().toString().trim();
+        user.updateEmail(strNewEmail)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SettingsActivity.this, "User email Address updated", Toast.LENGTH_SHORT).show();
+                            showUserInformation();
+                        } else {
+                            Toast.makeText(SettingsActivity.this, "error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @Override // hiển thị menu

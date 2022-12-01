@@ -28,6 +28,68 @@
                 app:popupTheme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:id="@+id/show_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/application_user_guide"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/appbar_layout_hf"/>
+
+        <LinearLayout
+            android:id="@+id/select_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="120dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/show_help">
+
+            <TextView
+                android:id="@+id/tv_select_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_help_guild"
+                android:textSize="13sp"
+                android:layout_weight="0"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <Spinner
+                android:id="@+id/spinner_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/show_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:text="Feedback"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_below="@id/select_help"/>
+
+        <Button
+            android:id="@+id/press_feedBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/show_feedback"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Press to feedback"/>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
