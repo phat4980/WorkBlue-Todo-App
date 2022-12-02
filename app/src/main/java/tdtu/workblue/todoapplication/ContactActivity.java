@@ -18,10 +18,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,16 +42,15 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+
 public class ContactActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView topNavigationViewContact;
     TextView num1,num2,num3;
     private TextView tvName, tvEmail;
-    private ImageView imgAvatar;
-
-    SupportMapFragment smf;
-    FusedLocationProviderClient client;
+    private SupportMapFragment smf;
+    private FusedLocationProviderClient client;
 
 
     @Override
@@ -70,6 +69,8 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
         callphone();
 
         //xử lý google map
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         smf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
         client = LocationServices.getFusedLocationProviderClient(this);
 
@@ -77,8 +78,8 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
-                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) { // xin quyền granted
-                        getMylocation();
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                        getmyLocation();
                     }
 
                     @Override
@@ -94,13 +95,35 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
 
     }
 
+    private void getmyLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        Task<Location> task = client.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(final Location location) {
+                smf.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(@NonNull GoogleMap googleMap) {
+                        LatLng latLng=new LatLng(10.732663152856569, 106.69976579420769);
+                        MarkerOptions markerOptions=new MarkerOptions().position(latLng).title("TDTU University");
+
+                        googleMap.addMarker(markerOptions);
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17));
+                    }
+                });
+            }
+        });
+    }
+
     private void initUi() // ánh xạ
     {
         toolbar = findViewById(R.id.toolbar_contact);
         drawerLayout = findViewById(R.id.drawer_layout_contact);
         topNavigationViewContact = findViewById(R.id.top_navigation_contact);
         topNavigationViewContact.setNavigationItemSelectedListener(this);
-        imgAvatar = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_image);
         tvName = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_name);
         tvEmail = topNavigationViewContact.getHeaderView(0).findViewById(R.id.profile_email);
         num1 = findViewById(R.id.showSDT1);
@@ -125,31 +148,9 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
             tvName.setText(name);
         }
         tvEmail.setText(email);
-        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
     }
 
-    private void getMylocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
 
-        Task<Location> task = client.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(final Location location) {
-                smf.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        LatLng latLng=new LatLng(10.732657281115225, 106.69974242970282);
-                        MarkerOptions markerOptions=new MarkerOptions().position(latLng).title("TDTU University");
-
-                        googleMap.addMarker(markerOptions);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
-                    }
-                });
-            }
-        });
-    }
 
     @Override // hiển thị menu
     public boolean onCreateOptionsMenu(Menu menu) {

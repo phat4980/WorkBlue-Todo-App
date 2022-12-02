@@ -7,28 +7,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,10 +43,10 @@ public class HelpFeedActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawerLayout;
     private NavigationView topNavigationViewHF;
     private TextView tvName, tvEmail;
-    private ImageView imgAvatar;
     private Spinner spinnerHelpGuild;
     private Button openDialogFeedback, btnNoFeed, btnSendFeed;
     private EditText edtFeedback;
+    private Dialog dialog;
 
 
     @Override
@@ -61,6 +64,7 @@ public class HelpFeedActivity extends AppCompatActivity implements NavigationVie
         showUserInformation();
         showHelpGuild();
         openDialog();
+
     }
 
     private void initUi() // ánh xạ
@@ -69,13 +73,13 @@ public class HelpFeedActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = findViewById(R.id.drawer_layout_hf);
         topNavigationViewHF = findViewById(R.id.top_navigation_hf);
         topNavigationViewHF.setNavigationItemSelectedListener(this);
-        imgAvatar = topNavigationViewHF.getHeaderView(0).findViewById(R.id.profile_image);
         tvName = topNavigationViewHF.getHeaderView(0).findViewById(R.id.profile_name);
         tvEmail = topNavigationViewHF.getHeaderView(0).findViewById(R.id.profile_email);
-        spinnerHelpGuild = (Spinner) findViewById(R.id.spinner_help);
+        spinnerHelpGuild = findViewById(R.id.spinner_help);
         openDialogFeedback = findViewById(R.id.press_feedBack);
-        btnNoFeed = findViewById(R.id.no_feed);
-        btnSendFeed = findViewById(R.id.send_feed);
+        btnNoFeed = findViewById(R.id.btn_no_feed);
+        btnSendFeed = findViewById(R.id.btn_send_feed);
+        edtFeedback = findViewById(R.id.edt_feed_back);
     }
 
     private void showUserInformation() {
@@ -95,7 +99,6 @@ public class HelpFeedActivity extends AppCompatActivity implements NavigationVie
             tvName.setText(name);
         }
         tvEmail.setText(email);
-        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
     }
 
     private void showHelpGuild() {
@@ -125,46 +128,14 @@ public class HelpFeedActivity extends AppCompatActivity implements NavigationVie
         openDialogFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                opnClickOpenDialog(Gravity.CENTER);
+                dialog = new Dialog(HelpFeedActivity.this);
+                dialog.setContentView(R.layout.dialog_feedback);
+                dialog.show();
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             }
         });
     }
 
-    private void opnClickOpenDialog(int gravity) {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_feedback);
-
-        //layout
-        Window window = dialog.getWindow();
-        if(window == null) {
-            return;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        //vị trí
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = gravity;
-        window.setAttributes(windowAttributes);
-
-        dialog.setCancelable(Gravity.CENTER == gravity);
-
-        btnNoFeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        btnSendFeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HelpFeedActivity.this, "Send feedback done", Toast.LENGTH_SHORT).show();
-            }
-        });
-        dialog.show();
-    }
 
 
     @Override // hiển thị menu

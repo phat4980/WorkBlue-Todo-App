@@ -31,7 +31,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -48,7 +47,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     private NavigationView topNavigationViewSettings;
     private EditText edtName, edtEmail;
     private Button btnUpdateProfile , btnUpdateEmail;
-    private ImageView imgAvatar;
     private TextView tvName, tvEmail;
     private ProgressBar progressBar;
 
@@ -83,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         edtEmail = findViewById(R.id.edt_email);
         btnUpdateProfile = findViewById(R.id.btnUpdate_profile);
         btnUpdateEmail = findViewById(R.id.btnUpdate_email);
-        imgAvatar = findViewById(R.id.edt_img_avatar);
         tvName = topNavigationViewSettings.getHeaderView(0).findViewById(R.id.profile_name);
         tvEmail = topNavigationViewSettings.getHeaderView(0).findViewById(R.id.profile_email);
 
@@ -162,7 +159,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             tvName.setText(name);
         }
         tvEmail.setText(email);
-        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
     }
 
     //Bắt sự kiện change email

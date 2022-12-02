@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tdtu.workblue.todoapplication"> <queries> <provider android:authorities="com.facebook.katana.provider.PlatformProvider" /> </queries>
+    package="tdtu.workblue.todoapplication"> <queries><provider android:authorities="com.facebook.katana.provider.PlatformProvider" /></queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -21,17 +23,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ContactActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity" />
+            android:name=".CalendarActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
+        <activity
+            android:name=".ContactActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TermsActivity"
             android:exported="true"
@@ -43,9 +49,7 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" />
-
-        <!-- Facebook -->
+            android:parentActivityName=".MainActivity" /> <!-- Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

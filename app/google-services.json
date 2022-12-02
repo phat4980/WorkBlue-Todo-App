@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "433165081126-qemjcoeun8523331gp90dm0ua47dnjoc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tdtu.workblue.todoapplication",
+            "certificate_hash": "6306665696aa706d21bc677d12f26252af26daa1"
+          }
+        },
+        {
           "client_id": "433165081126-i1i56kmus1mdo57ar98nukgcr7p8chou.apps.googleusercontent.com",
           "client_type": 3
         }

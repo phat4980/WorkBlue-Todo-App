@@ -1,13 +1,12 @@
 package tdtu.workblue.todoapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,43 +17,38 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CalendarActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private NavigationView topNavigationView;
+    private ViewPager2 viewPagerContent;
     private TextView tvName, tvEmail;
-    private RecyclerView recyclerView;
-    private FloatingActionButton btnAdd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_calendar);
 
 
 
         initUi();
         setSupportActionBar(toolbar); //kích hoạt drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
-                                    toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+                toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         bottomNavigationView.getMenu().getItem(1).setEnabled(false); //xóa placeholder trong menu bottom
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        
+
+
         bottomNavigationChange();
         showUserInformation();
-        addTasks();
     }
 
     private void initUi() // ánh xạ
@@ -66,19 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         tvName = topNavigationView.getHeaderView(0).findViewById(R.id.profile_name);
         tvEmail = topNavigationView.getHeaderView(0).findViewById(R.id.profile_email);
-        recyclerView = findViewById(R.id.recycle_view_task);
-        btnAdd = findViewById(R.id.btn_add_notes);
-    }
-
-    private void addTasks()
-    {
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
-
-            }
-        });
     }
 
     @Override // hiển thị menu
@@ -94,10 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if(id == R.id.tasks) {
-                } else if(id == R.id.calendar) {
-                    Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+                    Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
                     startActivity(intent);
                     overridePendingTransition(0,0);
+                } else if(id == R.id.calendar) {
                 }
                 return true;
             }
@@ -109,21 +90,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id == R.id.main) {
             drawerLayout.closeDrawer(GravityCompat.START);
-            } else if(id == R.id.settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        } else if(id == R.id.settings) {
+            Intent intent = new Intent(CalendarActivity.this, SettingsActivity.class);
             startActivity(intent);
         }  else if(id == R.id.help_feedback) {
-            Intent intent = new Intent(MainActivity.this, HelpFeedActivity.class);
+            Intent intent = new Intent(CalendarActivity.this, HelpFeedActivity.class);
             startActivity(intent);
         }  else if(id == R.id.terms) {
-            Intent intent = new Intent(MainActivity.this, TermsActivity.class);
+            Intent intent = new Intent(CalendarActivity.this, TermsActivity.class);
             startActivity(intent);
         }  else if(id == R.id.contact) {
-            Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+            Intent intent = new Intent(CalendarActivity.this, ContactActivity.class);
             startActivity(intent);
         } else if(id == R.id.logout) {
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
             startActivity(intent);
             finishAffinity();
         }

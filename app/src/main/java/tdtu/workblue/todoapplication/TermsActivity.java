@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,7 +70,6 @@ public class TermsActivity extends AppCompatActivity implements NavigationView.O
             tvName.setText(name);
         }
         tvEmail.setText(email);
-        Glide.with(this).load(photoUrI).error(R.drawable.ic_avatar_default).into(imgAvatar);
     }
 
     @Override // hiển thị menu
